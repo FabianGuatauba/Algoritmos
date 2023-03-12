@@ -1,0 +1,96 @@
+#include<iostream>
+#include<conio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<wchar.h>
+#include<locale.h>
+
+using namespace std;
+int validar(char validacion[]);
+
+int main()
+{
+    setlocale(LC_ALL,"");
+    char seguir, pago, validacion[10];
+    float inte=0,tmen=0,ns=0;
+	int mi, tdia, deposito;
+	do
+    {
+        system("cls");
+        do
+        {
+            cout<<"Ingrese su Monto Inicial por favor: $";cin>>validacion; //se solicita monto inicial
+            mi=validar(validacion);
+        }while(mi==0);
+        float vmi=atof(validacion);
+        do
+        {
+            cout<<"Ingrese su Tasa de Interés Anual por favor: ";cin>>validacion; //se soliita tasa de interes
+            tdia=validar(validacion);
+        }while(tdia==0);
+        float vtdia=atof(validacion);
+
+        tmen=vtdia/1200; // Saca el 4%
+        float totalint = 0;
+
+        do{
+			do
+            {
+	        	cout<<"Ingrese el monto a pagar: $";cin>>validacion; //se valida el pago
+	        	deposito=validar(validacion);
+	        }while(deposito==0);
+
+	        float vdeposito = atof(validacion);
+	        system("cls");
+
+
+	        inte = (vmi*tmen);
+	        totalint += inte;
+
+	        ns=(vmi+inte)-vdeposito;
+	        if(ns<0){
+	        	ns=0;
+			}
+
+	        cout<<"Saldo actual\t\tInterés\t\tPago\t\tNuevo Saldo"<<endl;
+	        cout<<"$"<<vmi<<"\t\t\t$"<<inte<<"\t\t$"<<vdeposito<<"\t\t$"<<ns<<endl<<endl;
+
+	        vmi = ns;
+
+		}while(vmi > 0);
+
+		cout<<"El total de intereses pagados fue: "<<totalint<<endl;
+
+        cout<<"\n¿Desea calcular otra deuda? [S/N]"<<endl;
+        cin>>seguir;
+    }while(seguir==83 || seguir==115); //ciclo para repetir proceso
+}
+
+int validar(char validacion[]) //funcion para validar numeros
+{
+    for(int i=0; i<strlen(validacion); i++)
+    {
+        if(validacion[i]==45)
+        {
+            cout<<"Ingrese montos positivos\n";
+            getch();
+            return 0;
+        }
+
+        if(!isdigit(validacion[i]))
+        {
+        	if(validacion[i]=='.')
+            {
+        		return 1;
+			}
+			else
+            {
+				cout<<"Ingrese solo numeros\n";
+            	getch();
+            	return 0;
+			}
+        }
+
+    }
+    return 1;
+}
