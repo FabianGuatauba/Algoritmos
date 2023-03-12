@@ -1,9 +1,9 @@
 #include<iostream>
-#include<conio.h>
-#include<stdlib.h>
+#include <math.h>
 #include<string.h>
 #include<wchar.h>
 #include<locale.h>
+#include<stdlib.h>
 
 using namespace std;
 int validar(char validacion[]);
@@ -11,57 +11,41 @@ int validar(char validacion[]);
 int main()
 {
     setlocale(LC_ALL,"");
-    char seguir, pago, validacion[10];
-    float inte=0,tmen=0,ns=0;
-	int mi, tdia, deposito;
+    char seguir,validacion[10];
+    double l1,l2,l3,a,s;
 	do
     {
-        system("cls");
+        system("clear");
         do
         {
-            cout<<"Ingrese su Monto Inicial por favor: $";cin>>validacion; //se solicita monto inicial
-            mi=validar(validacion);
-        }while(mi==0);
-        float vmi=atof(validacion);
+            cout<<"Ingrese el lado 1: ";cin>>validacion; //se pide lado 1
+            l1=validar(validacion);
+        }while(l1==0);
+        float vl1=atof(validacion);
         do
         {
-            cout<<"Ingrese su Tasa de Interés Anual por favor: ";cin>>validacion; //se soliita tasa de interes
-            tdia=validar(validacion);
-        }while(tdia==0);
-        float vtdia=atof(validacion);
+            cout<<"Ingrese el lado 2: ";cin>>validacion; //se pide lado 2
+            l2=validar(validacion);
+        }while(l2==0);
+        float vl2=atof(validacion);
+        do
+        {
+            cout<<"Ingrese el lado 3: ";cin>>validacion; //se pide lado 3
+            l3=validar(validacion);
+        }while(l3==0);
+        float vl3=atof(validacion);
+        if(((vl1+vl2)>vl3) && ((vl1+vl3)>vl2) && ((vl2+vl3)>vl1))
+        {
+            s=(vl1+vl2+vl3)/2;
+            a=sqrt(s*(s-vl1)*(s-vl2)*(s-vl3));
+            cout<<"El área de su triángulo es de: "<<a<<endl;
+        }
+        else
+        {
+            cout<<"De acuerdo a las medidas dadas, no se ha ingresado un triángulo."<<endl;
+        }
 
-        tmen=vtdia/1200; // Saca el 4%
-        float totalint = 0;
-
-        do{
-			do
-            {
-	        	cout<<"Ingrese el monto a pagar: $";cin>>validacion; //se valida el pago
-	        	deposito=validar(validacion);
-	        }while(deposito==0);
-
-	        float vdeposito = atof(validacion);
-	        system("cls");
-
-
-	        inte = (vmi*tmen);
-	        totalint += inte;
-
-	        ns=(vmi+inte)-vdeposito;
-	        if(ns<0){
-	        	ns=0;
-			}
-
-	        cout<<"Saldo actual\t\tInterés\t\tPago\t\tNuevo Saldo"<<endl;
-	        cout<<"$"<<vmi<<"\t\t\t$"<<inte<<"\t\t$"<<vdeposito<<"\t\t$"<<ns<<endl<<endl;
-
-	        vmi = ns;
-
-		}while(vmi > 0);
-
-		cout<<"El total de intereses pagados fue: "<<totalint<<endl;
-
-        cout<<"\n¿Desea calcular otra deuda? [S/N]"<<endl;
+        cout<<"\n¿Desea repetir el proceso? [S/N]"<<endl;
         cin>>seguir;
     }while(seguir==83 || seguir==115); //ciclo para repetir proceso
 }
@@ -72,8 +56,8 @@ int validar(char validacion[]) //funcion para validar numeros
     {
         if(validacion[i]==45)
         {
-            cout<<"Ingrese montos positivos\n";
-            getch();
+            cout<<"Ingrese números positivos\n";
+            //getch();
             return 0;
         }
 
@@ -85,8 +69,8 @@ int validar(char validacion[]) //funcion para validar numeros
 			}
 			else
             {
-				cout<<"Ingrese solo numeros\n";
-            	getch();
+				cout<<"Ingrese solo números\n";
+            	//getch();
             	return 0;
 			}
         }
