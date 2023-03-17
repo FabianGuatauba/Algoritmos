@@ -1,0 +1,97 @@
+#include<iostream>
+#include<string.h>
+#include<wchar.h>
+#include<locale.h>
+#include<stdlib.h>
+
+using namespace std;
+int validar(char validacion[]);
+
+int main()
+{
+    setlocale(LC_ALL,"");
+    char seguir,validacion[10];
+    double p1,p2,p3,ahorro;
+	do
+    {
+        cout<<"Tienda de gadgets \nSaldos completamente funcionales al 3x1"<<endl;
+        do
+        {
+            cout<<"Ingrese el precio de su primer producto: $";cin>>validacion; //se pide el precio del producto 1
+            p1=validar(validacion);
+        }while(p1==0);
+        float vp1=atof(validacion);
+        do
+        {
+            cout<<"Ingrese el precio de su segundo producto: $";cin>>validacion; //se pide el precio del producto 2
+            p2=validar(validacion);
+        }while(p2==0);
+        float vp2=atof(validacion);
+        do
+        {
+            cout<<"Ingrese el precio de su tercer producto: $";cin>>validacion; //se pide el precio del producto 3
+            p3=validar(validacion);
+        }while(p3==0);
+        float vp3=atof(validacion);
+        if(vp1>vp2 && vp1>vp3)
+        {
+            cout<<"Usted pagará: $"<<vp1<<endl;
+            ahorro=vp2+vp3;
+            cout<<"Su ahorro fue de: $"<<ahorro<<endl;
+        }
+        else if(vp2>vp1 && vp2>vp3)
+        {
+            cout<<"Usted pagará: $"<<vp2<<endl;
+            ahorro=vp1+vp3;
+            cout<<"Su ahorro fue de: $"<<ahorro<<endl;
+        }
+        else if(vp3>vp1 && vp3>vp2)
+        {
+            cout<<"Usted pagará: $"<<vp3<<endl;
+            ahorro=vp2+vp1;
+            cout<<"Su ahorro fue de: $"<<ahorro<<endl;
+        }
+        else if((vp1>vp3 && vp1==vp2) || (vp1>vp2 && vp1==vp3) || (vp2>vp1 && vp2==vp3))
+        {
+            cout<<"Usted pagará: $"<<vp1<<endl;
+            ahorro=vp2+vp3;
+            cout<<"Su ahorro fue de: $"<<ahorro<<endl;
+        }
+        else
+        {
+            cout<<"Usted pagará: $"<<vp3<<endl;
+            ahorro=vp1+vp3;
+            cout<<"Su ahorro fue de: $"<<ahorro<<endl;
+        }
+        cout<<"\n¿Desea repetir el proceso? [S/N]"<<endl;
+        cin>>seguir;
+        system("clear");
+    }while(seguir==83 || seguir==115); //ciclo para repetir proceso
+}
+
+int validar(char validacion[]) //funcion para validar numeros
+{
+    for(int i=0; i<strlen(validacion); i++)
+    {
+        if(validacion[i]==45)
+        {
+            cout<<"Ingrese números positivos\n";
+            //getch();
+            return 0;
+        }
+        if(!isdigit(validacion[i]))
+        {
+        	if(validacion[i]=='.')
+            {
+        		return 1;
+			}
+			else
+            {
+				cout<<"Ingrese solo números\n";
+            	//getch();
+            	return 0;
+			}
+        }
+    }
+    return 1;
+}
