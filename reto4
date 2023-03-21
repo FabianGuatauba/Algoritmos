@@ -1,0 +1,85 @@
+#include<iostream>
+#include<string.h>
+#include<wchar.h>
+#include<locale.h>
+#include<stdlib.h>
+#include<algorithm>
+#include <vector>
+
+using namespace std;
+int validar(char validacion[]);
+
+int main()
+{
+    setlocale(LC_ALL,"");
+    int cantidad, mayor_prom=0;
+    char seguir,validacion[10];
+    float sueldo=0, sum=0, promedio, menor, mayor;
+	do
+    {
+        do
+        {
+            cout<<"Ingrese la cantidad de sueldos: ";cin>>validacion;
+            cantidad=validar(validacion);
+        }while(cantidad==0);
+        cantidad=atof(validacion);
+        vector<float> sueldos(cantidad);
+        for(int i=0; i<cantidad; i++)
+        {
+            do
+            {
+                cout << "Ingrese el sueldo " << i+1 << ": $";cin>>validacion;
+                sueldo=validar(validacion);
+                sueldos[i] = sueldo;
+            }while(sueldo==0);
+            sueldos[i]=atof(validacion);
+            sum += sueldos[i];
+        }
+        promedio=sum/cantidad;
+        menor = *min_element(sueldos.begin(), sueldos.end());
+        mayor = *max_element(sueldos.begin(), sueldos.end());
+        for(int i=0; i<cantidad; i++)
+        {
+            if(sueldos[i] > promedio)
+            {
+                mayor_prom++;
+            }
+        }
+
+        cout << "\nEl promedio de sueldos es:\n $" << promedio << endl;
+        cout << "El sueldo menor es: \n $" << menor << endl;
+        cout << "El sueldo mayor es:\n $" << mayor << endl;
+        cout << "La cantidad de sueldos mayores al promedio es: \n" << mayor_prom << endl;
+
+        cout<<"\n¿Desea repetir el proceso? [S/N]"<<endl;
+        cin>>seguir;
+        system("clear");
+    }while(seguir==83 || seguir==115); //ciclo para repetir proceso
+}
+
+int validar(char validacion[]) //funcion para validar numeros
+{
+    for(int i=0; i<strlen(validacion); i++)
+    {
+        if(validacion[i]==45)
+        {
+            cout<<"Ingrese números positivos\n";
+            //getch();
+            return 0;
+        }
+        if(!isdigit(validacion[i]))
+        {
+        	if(validacion[i]=='.')
+            {
+        		return 1;
+			}
+			else
+            {
+				cout<<"Ingrese solo números\n";
+            	//getch();
+            	return 0;
+			}
+        }
+    }
+    return 1;
+}
